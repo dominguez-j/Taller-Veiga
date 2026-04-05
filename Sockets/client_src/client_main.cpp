@@ -13,9 +13,11 @@ int main(int argc, char* argv[]) {
         return ERROR;
     }
 
-    std::string hostname(argv[1]), servname(argv[2]), username(argv[3]);
-    Client client(username, hostname, servname);
-    client.run();
+    try {
+        std::string hostname(argv[1]), servname(argv[2]), username(argv[3]);
+        Client client(username, hostname, servname);
+        client.run();
+    } catch (const std::exception& e) {}
 
     return SUCCESS;
 }

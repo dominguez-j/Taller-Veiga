@@ -6,9 +6,10 @@
 #include <netinet/in.h>
 
 #include "../common_src/data.h"
+#include "../common_src/formatter.h"
 #include "../common_src/parser.h"
+#include "../common_src/printer.h"
 
-#include "formatter.h"
 #include "verificator.h"
 
 #define EXIT_CMD "exit"
@@ -17,15 +18,13 @@ void Client::send_buy_request(BuyRequest&& buy_request) {
     protocol.send_buy_request(std::move(buy_request));
 }
 
-void Client::receive_equipment(bool& connected) {
-    if (connected)
-        std::cout << Formatter::equipment_to_screen(protocol.receive_equipment(connected))
-                  << std::endl;
+void Client::receive_equipment() {
+    Printer::print(Formatter::equipment_to_screen(protocol.receive_equipment()));
 }
 
 void Client::run() {
     bool connected = true;
-    receive_equipment(connected);
+    receive_equipment();
     std::string message;
     while (connected) {
         std::getline(std::cin, message);
@@ -35,7 +34,7 @@ void Client::run() {
             continue;
         } else {
             send_buy_request(Parser::parse_buy_request_from_client(message));
-            receive_equipment(connected);
+            receive_equipment();
         }
     }
 }

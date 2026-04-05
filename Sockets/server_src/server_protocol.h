@@ -6,36 +6,26 @@
 
 #include "../common_src/buy_request.h"
 #include "../common_src/equipment.h"
-#include "../common_src/socket.h"
+#include "../common_src/protocol.h"
 
-class ServerProtocol {
+class ServerProtocol: public Protocol {
 private:
-    const std::string servname;
-    const std::string type_of_protocol;
-    Socket peer;
-
-    /*
-     * Formatea y envia el mensaje a enviar al cliente en protocolo binario o de texto.
-     */
     void serialize_binary(Equipment&& e);
     void serialize_text(Equipment&& e);
 
-    /*
-     * Deformatea y devuelve el mensaje que envia el cliente en protocolo binario o de texto.
-     */
-    BuyRequest deserialize_binary(bool& connected);
-    BuyRequest deserialize_text(bool& connected);
+    BuyRequest deserialize_binary();
+    BuyRequest deserialize_text();
 
     ServerProtocol(const ServerProtocol&) = delete;
     ServerProtocol& operator=(const ServerProtocol&) = delete;
 
 public:
     ServerProtocol(const std::string& servname, const std::string& type_of_protocol, Socket&& peer):
-            servname(servname), type_of_protocol(type_of_protocol), peer(std::move(peer)) {}
+            Protocol(std::move(peer), type_of_protocol) {}
 
     void send_equipment(Equipment&& e);
     void send_protocol();
-    BuyRequest receive_buy_request(bool& connected);
+    BuyRequest receive_buy_request();
     std::string receive_username();
 
     ServerProtocol(ServerProtocol&&) = default;

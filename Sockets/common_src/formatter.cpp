@@ -26,3 +26,9 @@ std::string Formatter::equipment_to_screen(Equipment&& e) {
 
     return equipment.str();
 }
+
+std::string Formatter::welcome_message_to_screen(const std::string& username) {
+    std::stringstream welcome;
+    welcome << "Welcome " << username << "!" << std::endl;
+    return welcome.str();
+}

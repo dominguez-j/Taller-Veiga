@@ -375,11 +375,6 @@ int Socket::sendall(const void* data, unsigned int sz) {
     return sz;
 }
 
-int Socket::sendall(const std::stringstream& ss) {
-    std::string data = ss.str();
-    return sendall(data.c_str(), data.size());
-}
-
 Socket::Socket(int skt) {
     this->skt = skt;
     this->closed = false;

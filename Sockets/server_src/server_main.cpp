@@ -12,10 +12,11 @@ int main(int argc, char* argv[]) {
         std::cerr << "Please use: " << argv[0] << " <port> <type_of_protocol>" << std::endl;
         return ERROR;
     }
-
-    std::string port(argv[1]), protocol(argv[2]);
-    Server server(port, protocol);
-    server.run();
+    try {
+        std::string port(argv[1]), protocol(argv[2]);
+        Server server(port, protocol);
+        server.run();
+    } catch (const std::exception& e) {}
 
     return SUCCESS;
 }

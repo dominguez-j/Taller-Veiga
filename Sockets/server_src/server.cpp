@@ -1,11 +1,12 @@
 #include "server.h"
 
-#include <iostream>
 #include <utility>
 
 #include "../common_src/buy_request.h"
 #include "../common_src/data.h"
 #include "../common_src/equipment.h"
+#include "../common_src/formatter.h"
+#include "../common_src/printer.h"
 #include "../common_src/text_splitter.h"
 
 #include "shop.h"
@@ -18,14 +19,12 @@ void Server::create_player() {
 }
 
 void Server::welcome_message(const std::string& username) const {
-    std::cout << username << " has arrived!" << std::endl;
+    Printer::print(Formatter::welcome_message_to_screen(username));
 }
 
 void Server::send_protocol() { protocol.send_protocol(); }
 
-BuyRequest Server::receive_buy_request(bool& connected) {
-    return protocol.receive_buy_request(connected);
-}
+BuyRequest Server::receive_buy_request() { return protocol.receive_buy_request(); }
 
 void Server::send_player_equipment() {
     Equipment e;
@@ -44,12 +43,9 @@ void Server::run() {
     create_player();
     send_protocol();
     send_player_equipment();
-    bool connected = true;
-    while (connected) {
-        BuyRequest buy_request = receive_buy_request(connected);
-        if (connected) {
-            Shop::try_purchase(std::move(buy_request), player);
-            send_player_equipment();
-        }
+    while (true) {
+        BuyRequest buy_request = receive_buy_request();
+        Shop::try_purchase(std::move(buy_request), player);
+        send_player_equipment();
     }
 }

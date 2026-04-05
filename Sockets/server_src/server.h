@@ -16,7 +16,7 @@ private:
     void send_protocol();
     void send_player_equipment();
     void create_player();
-    BuyRequest receive_buy_request(bool& connected);
+    BuyRequest receive_buy_request();
 
     Server(const Server&) = delete;
     Server& operator=(const Server&) = delete;

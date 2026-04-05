@@ -145,7 +145,6 @@ public:
      * */
     int sendall(const void* data, unsigned int sz);
     int recvall(void* data, unsigned int sz);
-    int sendall(const std::stringstream& ss);
 
     /*
      * Acepta una conexión entrante y retorna un nuevo socket

@@ -14,7 +14,7 @@ private:
     ClientProtocol protocol;
 
     void send_buy_request(BuyRequest&& buy_request);
-    void receive_equipment(bool& connected);
+    void receive_equipment();
 
     Client(const Client&) = delete;
     Client& operator=(const Client&) = delete;

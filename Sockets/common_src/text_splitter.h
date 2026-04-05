@@ -13,12 +13,6 @@
 
 class TextSplitter {
 public:
-    /*
-     * `TextSplitter::split_text` divide un string en partes
-     * separadas por el delimitador dado.
-     *
-     * Devuelve un vector de strings con las partes.
-     * */
     static std::vector<std::string> split_text(const std::string& input, char delimiter);
 };
 

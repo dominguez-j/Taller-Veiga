@@ -10,10 +10,6 @@ private:
     static const std::unordered_set<std::string> valid_commands;
 
 public:
-    /*
-     * `Verificator::verificate_operation` verifica si la
-     * operación es válida.
-     * */
     static bool verificate_operation(const std::string& message);
 };
 
