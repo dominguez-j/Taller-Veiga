@@ -5,9 +5,7 @@
 #include "../common_src/buy_request.h"
 #include "../common_src/data.h"
 #include "../common_src/equipment.h"
-#include "../common_src/formatter.h"
 #include "../common_src/printer.h"
-#include "../common_src/text_splitter.h"
 
 #include "shop.h"
 #include "weapon.h"
@@ -19,7 +17,7 @@ void Server::create_player() {
 }
 
 void Server::welcome_message(const std::string& username) const {
-    Printer::print(Formatter::welcome_message_to_screen(username));
+    Printer::print("Welcome " + username + "!\n");
 }
 
 void Server::send_protocol() { protocol.send_protocol(); }

@@ -3,12 +3,13 @@
 #include <iostream>
 
 #include "../common_src/data.h"
+#include "../common_src/printer.h"
 
 #define WEAPON_COST 100
 #define AMMO_COST 1
 
 void Shop::print_purchase_failed(const std::string& cmd) {
-    std::cout << "Not enough money to buy " << (cmd == BUY ? WEAPON : AMMO) << std::endl;
+    Printer::print("Not enough money to buy " + std::string(cmd == BUY ? WEAPON : AMMO));
 }
 
 void Shop::try_purchase(BuyRequest&& buy_request, Player& player) {
