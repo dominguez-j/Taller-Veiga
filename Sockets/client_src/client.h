@@ -21,7 +21,9 @@ private:
 
 public:
     Client(const std::string& username, const std::string& hostname, const std::string& servname):
-            username(username), protocol(hostname, servname, username) {}
+            username(username), protocol(hostname, servname, username) {
+        run();
+    }
 
     void run();
 

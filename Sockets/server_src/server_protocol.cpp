@@ -48,17 +48,10 @@ BuyRequest ServerProtocol::deserialize_binary() {
 
 BuyRequest ServerProtocol::deserialize_text() {
     std::string message;
-    Buffer buffer(MAX_BUY_REQUEST_SIZE);
-    int end_of_line = 0;
-    while (end_of_line == 0) {
-        std::string received = recv_some_string(buffer.size());
-        if (received.empty()) {
-            throw std::runtime_error("Connection closed by client");
-        }
-
-        if (received.back() == END_OF_LINE)
-            end_of_line = 1;
-
+    while (message.find(END_OF_LINE) == std::string::npos) {
+        std::string received = recv_some_string(MAX_BUY_REQUEST_SIZE);
+        if (received.empty())
+            throw std::runtime_error("Connection closed");
         message.append(received);
     }
     return Parser::parse_buy_request_from_server(message);

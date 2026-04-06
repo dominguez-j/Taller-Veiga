@@ -24,17 +24,15 @@ void ClientProtocol::serialize_binary(BuyRequest&& buy_request) {
 }
 
 void ClientProtocol::serialize_text(BuyRequest&& buy_request) {
-    std::stringstream ss;
-    std::string cmd = Converter::cmd_translation(buy_request.command);
+    std::string txt = Converter::cmd_translation(buy_request.command);
 
-    ss << cmd;
     if (buy_request.command == BUY)
-        ss << COLON << buy_request.weapon_name;
+        txt += COLON + buy_request.weapon_name;
     else
-        ss << DOT << buy_request.weapon_type << COLON << buy_request.ammo_count;
+        txt += DOT + buy_request.weapon_type + COLON + std::to_string(buy_request.ammo_count);
 
-    ss << END_OF_LINE;
-    send_string(ss.str());
+    txt += END_OF_LINE;
+    send_string(txt);
 }
 
 Equipment ClientProtocol::deserialize_binary() {
@@ -53,10 +51,9 @@ Equipment ClientProtocol::deserialize_binary() {
 
 Equipment ClientProtocol::deserialize_text() {
     std::string message;
-    Buffer buffer(MAX_EQUIPMENT_SIZE);
     int count_endl = 0;
     while (count_endl < MAX_ENDL) {
-        std::string received = recv_some_string(buffer.size());
+        std::string received = recv_some_string(MAX_EQUIPMENT_SIZE);
         if (received.empty()) {
             throw std::runtime_error("Connection closed by server");
         }
