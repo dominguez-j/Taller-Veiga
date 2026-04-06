@@ -21,6 +21,7 @@ private:
     char winner = IN_PROGRESS;
     std::condition_variable turn;
     std::mutex mtx;
+    bool _is_active = true;
 
     const bool is_this_value_wins(char value) const;
     const bool is_full() const;
@@ -35,9 +36,10 @@ public:
     void make_move(int row, int col, char value);
     const Board& get_table() const;
     const std::string& get_party_name() const;
-    const char has_winner() const;
+    const char has_winner();
     const void wait_turn(const char& player_value);
     void finish_turn();
+    const bool is_active();
 
     Match(Match&&) = default;
     Match& operator=(Match&&) = default;

@@ -52,16 +52,21 @@ const bool Match::is_this_value_wins(char value) const {
     return false;
 }
 
-const char Match::has_winner() const {
+const char Match::has_winner() {
     if (is_this_value_wins(CROSS))
-        return CROSS;
-    if (is_this_value_wins(CIRCLE))
-        return CIRCLE;
-    if (is_full())
-        return DRAW;
+        winner = CROSS;
+    else if (is_this_value_wins(CIRCLE))
+        winner = CIRCLE;
+    else if (is_full())
+        winner = DRAW;
 
-    return IN_PROGRESS;
+    if (winner != IN_PROGRESS)
+        _is_active = false;
+
+    return winner;
 }
+
+const bool Match::is_active() { return _is_active; }
 
 const void Match::wait_turn(const char& player_value) {
     std::unique_lock<std::mutex> lock(mtx);

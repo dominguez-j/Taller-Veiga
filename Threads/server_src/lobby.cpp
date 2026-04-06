@@ -6,6 +6,7 @@
 
 std::shared_ptr<Match> Lobby::create_match(const std::string& party_name) {
     std::lock_guard<std::mutex> lock(mtx);
+    reap();
     auto match = std::make_shared<Match>(party_name);
     matches[party_name] = match;
     return match;
@@ -19,6 +20,17 @@ std::shared_ptr<Match> Lobby::join_match(const std::string& party_name) {
         return match->second;
 
     return nullptr;
+}
+
+void Lobby::reap() {
+    auto it = matches.begin();
+    while (it != matches.end()) {
+        if (!it->second->is_active()) {
+            it = matches.erase(it);
+        } else {
+            ++it;
+        }
+    }
 }
 
 std::vector<std::string> Lobby::show_matches() {

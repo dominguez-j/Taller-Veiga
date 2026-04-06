@@ -14,6 +14,8 @@ private:
     std::mutex mtx;
     std::map<std::string, std::shared_ptr<Match>> matches;
 
+    void reap();
+
     Lobby(const Lobby&) = delete;
     Lobby& operator=(const Lobby&) = delete;
 
