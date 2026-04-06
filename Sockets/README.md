@@ -7,6 +7,7 @@
 - `make -f MakefileSockets clean` para limpiar
 
 # Test
+- `chmod +x ./test/*.sh` para dar permisos de ejecución
 - `./test/run_tests.sh ./ ./test/casos single-client no-valgrind 10` para correr los tests sin valgrind y con timeout de 10
 - `./test/run_tests.sh ./ ./test/casos single-client valgrind 10` para correr los tests con valgrind y con timeout de 10
 

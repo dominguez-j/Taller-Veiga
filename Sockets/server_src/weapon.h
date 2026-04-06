@@ -7,7 +7,7 @@
 
 class Weapon {
 private:
-    int ammo_count;
+    int ammo_count = 0;
     std::string name;
 
     Weapon(const Weapon&) = delete;
@@ -15,9 +15,7 @@ private:
 
 public:
     explicit Weapon(const std::string& name): name(name) {
-        if (name == NOT_EQUIPPED)
-            ammo_count = 0;
-        else
+        if (name != NOT_EQUIPPED)
             ammo_count = 30;
     }
 

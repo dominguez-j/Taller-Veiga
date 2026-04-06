@@ -13,12 +13,12 @@
 
 void ServerProtocol::serialize_binary(Equipment&& e) {
     send_uint8_t(Converter::str_to_bin(EQUIPMENT));
-    send_uint16_t(htons(static_cast<uint16_t>(e.money)));
+    send_uint16_t(static_cast<uint16_t>(e.money));
     send_uint8_t(static_cast<uint8_t>(e.knife));
     send_uint8_t(Converter::str_to_bin(e.primary));
-    send_uint16_t(htons(static_cast<uint16_t>(e.primary_ammo)));
+    send_uint16_t(static_cast<uint16_t>(e.primary_ammo));
     send_uint8_t(Converter::str_to_bin(e.secondary));
-    send_uint16_t(htons(static_cast<uint16_t>(e.secondary_ammo)));
+    send_uint16_t(static_cast<uint16_t>(e.secondary_ammo));
 }
 
 void ServerProtocol::serialize_text(Equipment&& e) {
@@ -41,7 +41,7 @@ BuyRequest ServerProtocol::deserialize_binary() {
         buy_request.weapon_name = Converter::bin_to_weapon(recv_uint8_t());
     } else {
         buy_request.weapon_type = Converter::bin_to_weapon_type(recv_uint8_t());
-        buy_request.ammo_count = ntohs(recv_uint16_t());
+        buy_request.ammo_count = recv_uint16_t();
     }
     return buy_request;
 }

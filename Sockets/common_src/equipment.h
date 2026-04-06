@@ -4,16 +4,25 @@
 #include <cstdint>
 #include <string>
 
-struct Equipment {
-    uint16_t money;
-    bool knife;
-    std::string primary;
-    uint16_t primary_ammo;
-    std::string secondary;
-    uint16_t secondary_ammo;
+#include "../server_src/player.h"
 
-    Equipment():
-            money(0), knife(true), primary(""), primary_ammo(0), secondary(""), secondary_ammo(0) {}
+struct Equipment {
+    uint16_t money = 0;
+    bool knife = true;
+    std::string primary = "";
+    uint16_t primary_ammo = 0;
+    std::string secondary = "";
+    uint16_t secondary_ammo = 0;
+
+    Equipment() = default;
+
+    explicit Equipment(const Player& p):
+            money(p.get_money()),
+            knife(p.has_knife()),
+            primary(p.get_primary_name()),
+            primary_ammo(p.get_primary_ammo()),
+            secondary(p.get_secondary_name()),
+            secondary_ammo(p.get_secondary_ammo()) {}
 };
 
 #endif  //__EQUIPMENT_H__

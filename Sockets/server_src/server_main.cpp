@@ -15,7 +15,6 @@ int main(int argc, char* argv[]) {
     try {
         std::string port(argv[1]), protocol(argv[2]);
         Server server(port, protocol);
-        server.run();
     } catch (const std::exception& e) {}
 
     return SUCCESS;

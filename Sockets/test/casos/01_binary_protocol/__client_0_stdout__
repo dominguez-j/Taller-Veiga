@@ -1,10 +1,10 @@
-money: $500 | knife: equipped | primary: not_equipped | secondary: glock, 30
-money: $500 | knife: equipped | primary: not_equipped | secondary: glock, 30
-money: $400 | knife: equipped | primary: awp, 30 | secondary: glock, 30
-money: $400 | knife: equipped | primary: awp, 30 | secondary: glock, 30
-money: $300 | knife: equipped | primary: ak-47, 30 | secondary: glock, 30
-money: $300 | knife: equipped | primary: ak-47, 30 | secondary: glock, 30
-money: $300 | knife: equipped | primary: ak-47, 30 | secondary: glock, 30
-money: $200 | knife: equipped | primary: m3, 30 | secondary: glock, 30
-money: $200 | knife: equipped | primary: m3, 30 | secondary: glock, 30
-money: $200 | knife: equipped | primary: m3, 30 | secondary: glock, 30
+money: $62465 | knife: equipped | primary: not_equipped | secondary: glock, 7680
+money: $62465 | knife: equipped | primary: not_equipped | secondary: glock, 7680
+money: $36865 | knife: equipped | primary: awp, 7680 | secondary: glock, 7680
+money: $34305 | knife: equipped | primary: awp, 10240 | secondary: glock, 7680
+money: $8705 | knife: equipped | primary: ak-47, 7680 | secondary: glock, 7680
+money: $4865 | knife: equipped | primary: ak-47, 11520 | secondary: glock, 7680
+money: $1025 | knife: equipped | primary: ak-47, 15360 | secondary: glock, 7680
+money: $40960 | knife: equipped | primary: m3, 7680 | secondary: glock, 7680
+money: $39680 | knife: equipped | primary: m3, 8960 | secondary: glock, 7680
+money: $37120 | knife: equipped | primary: m3, 8960 | secondary: glock, 10240

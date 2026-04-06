@@ -24,6 +24,8 @@ void Player::set_weapon(const std::string& weapon) {
         secondary = std::move(Weapon(weapon));
 }
 
+void Player::set_username(const std::string& name) { username = std::move(name); }
+
 std::string Player::get_primary_name() const { return primary.get_name(); }
 std::string Player::get_secondary_name() const { return secondary.get_name(); }
 int Player::get_primary_ammo() const { return primary.get_ammo_count(); }

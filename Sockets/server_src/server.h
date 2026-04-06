@@ -23,9 +23,9 @@ private:
 
 public:
     Server(const std::string& servname, const std::string& type_of_protocol):
-            skt(servname.c_str()),
-            protocol(servname, type_of_protocol, this->skt.accept()),
-            player("") {}
+            skt(servname.c_str()), protocol(servname, type_of_protocol, this->skt.accept()) {
+        run();
+    }
 
     void run();
 
