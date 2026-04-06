@@ -3,8 +3,10 @@
 
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 #include "../common_src/client_command.h"
+#include "../common_src/constants.h"
 #include "../common_src/socket.h"
 
 #include "lobby.h"
@@ -23,20 +25,26 @@ private:
     char player_value = EMPTY;
     SSFormatter ss_f;
 
+    using CommandHandler = void (ClientHandler::*)(const ClientCommand&);
+    std::unordered_map<std::string, CommandHandler> handlers;
+
     void send_game_state(const std::string& message);
     void play();
     bool handle_game_state(std::string& message);
     void handle_move(const ClientCommand& cmd);
-    void handle_list();
+    void handle_list(const ClientCommand& cmd);
     void handle_join(const ClientCommand& cmd);
     void handle_create(const ClientCommand& cmd);
-    void handle_command(const ClientCommand& cmd);
 
     ClientHandler(const ClientHandler&) = delete;
     ClientHandler& operator=(const ClientHandler&) = delete;
 
 public:
-    ClientHandler(Socket&& skt, Lobby& lobby): protocol(skt), lobby(lobby), match() {}
+    ClientHandler(Socket&& skt, Lobby& lobby): protocol(skt), lobby(lobby), match() {
+        handlers[CREAR] = &ClientHandler::handle_create;
+        handlers[UNIRSE] = &ClientHandler::handle_join;
+        handlers[LISTAR] = &ClientHandler::handle_list;
+    }
 
     void run() override;
     void stop() override;

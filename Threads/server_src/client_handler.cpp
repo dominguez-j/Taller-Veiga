@@ -36,15 +36,20 @@ void ClientHandler::play() {
         std::string message = EMPTY_MSG;
         bool finished = handle_game_state(message);
         send_game_state(message);
-        if (!finished) {
-            ClientCommand cmd = protocol.receive_command();
-            if (cmd.cmd == JUGAR)
-                handle_move(cmd);
-        } else {
-            stop();
+
+        if (finished) {
+            match->finish_turn();
+            break;
         }
+
+        ClientCommand cmd = protocol.receive_command();
+        if (cmd.cmd == JUGAR)
+            handle_move(cmd);
+        else
+            break;
         match->finish_turn();
     }
+    stop();
 }
 
 void ClientHandler::handle_create(const ClientCommand& cmd) {
@@ -63,18 +68,8 @@ void ClientHandler::handle_join(const ClientCommand& cmd) {
     play();
 }
 
-void ClientHandler::handle_list() {
+void ClientHandler::handle_list(const ClientCommand& cmd) {
     protocol.send_response(ss_f.format_party_list(lobby.show_matches()));
-}
-
-void ClientHandler::handle_command(const ClientCommand& cmd) {
-    if (cmd.cmd == CREAR) {
-        handle_create(cmd);
-    } else if (cmd.cmd == UNIRSE) {
-        handle_join(cmd);
-    } else if (cmd.cmd == LISTAR) {
-        handle_list();
-    }
 }
 
 void ClientHandler::stop() { is_alive = false; }
@@ -82,7 +77,9 @@ void ClientHandler::stop() { is_alive = false; }
 void ClientHandler::run() {
     while (is_alive) {
         ClientCommand cmd = protocol.receive_command();
-        handle_command(cmd);
+        if (handlers.count(cmd.cmd)) {
+            (this->*handlers[cmd.cmd])(cmd);
+        }
     }
 }
 
