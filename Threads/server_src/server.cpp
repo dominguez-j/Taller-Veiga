@@ -7,7 +7,7 @@
 
 #define EXIT "q"
 
-void Server::run() {
+void Server::run(const std::string& port) {
 
     Lobby lobby;
     Acceptor acceptor(port.c_str(), lobby);

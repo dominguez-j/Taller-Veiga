@@ -7,15 +7,13 @@
 
 class Server {
 private:
-    std::string port;
-
     Server(const Server&) = delete;
     Server& operator=(const Server&) = delete;
 
 public:
-    explicit Server(const std::string& port): port(port) {}
+    explicit Server(const std::string& port) { run(port); }
 
-    void run();
+    void run(const std::string& port);
 
     Server(Server&&) = default;
     Server& operator=(Server&&) = default;

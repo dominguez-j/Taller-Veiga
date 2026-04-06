@@ -9,25 +9,12 @@
 
 ClientCommand ServerProtocol::receive_command() {
     ClientCommand cc;
-
-    uint8_t cmd;
-    peer.recvall(&cmd, sizeof(cmd));
-
-    cc.cmd = converter.bin_to_cmd(cmd);
+    cc.cmd = converter.bin_to_cmd(recv_uint8_t());
 
     if (cc.cmd == CREAR || cc.cmd == UNIRSE) {
-        uint16_t party_name_size;
-        peer.recvall(&party_name_size, sizeof(party_name_size));
-        party_name_size = ntohs(party_name_size);
-
-        std::vector<char> party_name(party_name_size);
-        peer.recvall(party_name.data(), party_name.size());
-
-        cc.party_name = std::string(party_name.data(), party_name.size());
+        cc.party_name = recv_string(recv_uint16_t());
     } else if (cc.cmd == JUGAR) {
-        uint8_t column_row;
-        peer.recvall(&column_row, sizeof(column_row));
-
+        uint8_t column_row = recv_uint8_t();
         cc.column = column_row >> 4;
         cc.row = column_row & 0x0F;
     }
@@ -35,9 +22,13 @@ ClientCommand ServerProtocol::receive_command() {
     return cc;
 }
 
-void ServerProtocol::send_response(std::stringstream response) {
-    uint16_t msg_size = htons(response.str().size());
+void ServerProtocol::send_response(std::stringstream&& response) {
+    std::string msg = response.str();
+    send_uint16_t(msg.size());
+    send_string(msg);
+}
 
-    peer.sendall(&msg_size, sizeof(msg_size));
-    peer.sendall(response.str().c_str(), response.str().size());
+void ServerProtocol::kill() {
+    skt.shutdown(2);
+    skt.close();
 }

@@ -16,7 +16,6 @@ int main(int argc, char* argv[]) {
     std::string port(argv[1]);
     try {
         Server server(port);
-        server.run();
     } catch (...) {
         return ERROR;
     }
