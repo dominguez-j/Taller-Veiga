@@ -16,10 +16,7 @@ int main(int argc, char* argv[]) {
     std::string host(argv[1]), port(argv[2]);
     try {
         Client client(host, port);
-        client.run();
-    } catch (...) {
-        return ERROR;
-    }
+    } catch (const std::exception& e) {}
 
     return SUCCESS;
 }

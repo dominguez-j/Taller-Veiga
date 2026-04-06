@@ -5,11 +5,11 @@
 
 #include "../common_src/client_command.h"
 #include "../common_src/converter.h"
+#include "../common_src/protocol.h"
 #include "../common_src/socket.h"
 
-class ClientProtocol {
+class ClientProtocol: public Protocol {
 private:
-    Socket skt;
     Converter converter;
 
     ClientProtocol(const ClientProtocol&) = delete;
@@ -17,10 +17,10 @@ private:
 
 public:
     ClientProtocol(const std::string& host, const std::string& port):
-            skt(host.c_str(), port.c_str()) {}
+            Protocol(Socket(host.c_str(), port.c_str())) {}
 
     void send_command(const ClientCommand& cc);
-    std::string receive_response(bool& connected);
+    std::string receive_response();
 
     ClientProtocol(ClientProtocol&&) = default;
     ClientProtocol& operator=(ClientProtocol&&) = default;

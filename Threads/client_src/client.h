@@ -13,15 +13,16 @@ private:
     ClientProtocol protocol;
     Parser parser;
     Verificator verificator;
+    bool has_finished = false;
 
     void send_command(const std::string& msg);
-    void receive_response(bool& connected);
+    void receive_response();
 
     Client(const Client&) = delete;
     Client& operator=(const Client&) = delete;
 
 public:
-    Client(const std::string& host, const std::string& port): protocol(host, port) {}
+    Client(const std::string& host, const std::string& port): protocol(host, port) { run(); }
 
     void run();
 
