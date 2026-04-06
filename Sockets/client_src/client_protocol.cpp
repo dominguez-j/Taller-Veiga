@@ -41,12 +41,12 @@ Equipment ClientProtocol::deserialize_binary() {
     Equipment e;
     recv_uint8_t();  // Drop
 
-    e.money = ntohs(recv_uint16_t());
+    e.money = recv_uint16_t();
     e.knife = static_cast<bool>(recv_uint8_t());
     e.primary = Converter::bin_to_weapon(recv_uint8_t());
-    e.primary_ammo = ntohs(recv_uint16_t());
+    e.primary_ammo = recv_uint16_t();
     e.secondary = Converter::bin_to_weapon(recv_uint8_t());
-    e.secondary_ammo = ntohs(recv_uint16_t());
+    e.secondary_ammo = recv_uint16_t();
 
     return e;
 }
