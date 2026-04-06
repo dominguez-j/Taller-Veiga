@@ -41,7 +41,7 @@ void ClientHandler::play() {
             if (cmd.cmd == JUGAR)
                 handle_move(cmd);
         } else {
-            kill();
+            stop();
         }
         match->finish_turn();
     }
@@ -77,7 +77,7 @@ void ClientHandler::handle_command(const ClientCommand& cmd) {
     }
 }
 
-void ClientHandler::kill() { is_alive = false; }
+void ClientHandler::stop() { is_alive = false; }
 
 void ClientHandler::run() {
     while (is_alive) {

@@ -13,11 +13,16 @@ void Acceptor::reap() {
 
 void Acceptor::clear() {
     for (auto* client: clients) {
-        client->kill();
+        client->stop();
         client->join();
         delete client;
     }
     clients.clear();
+}
+
+void Acceptor::stop() {
+    acceptor.shutdown(2);
+    acceptor.close();
 }
 
 void Acceptor::run() {

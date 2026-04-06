@@ -28,15 +28,15 @@ public:
     }
 
     void run() override;
+    void stop() override;
 
     Acceptor(Acceptor&&) = default;
     Acceptor& operator=(Acceptor&&) = default;
 
     ~Acceptor() {
-        acceptor.shutdown(2);
-        acceptor.close();
-        clear();
-        join();
+        this->stop();
+        this->clear();
+        this->join();
     }
 };
 

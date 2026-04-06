@@ -39,8 +39,8 @@ public:
     ClientHandler(Socket&& skt, Lobby& lobby): protocol(skt), lobby(lobby), match() {}
 
     void run() override;
+    void stop() override;
     const bool is_dead() const;
-    void kill();
 
     ClientHandler(ClientHandler&&) = default;
     ClientHandler& operator=(ClientHandler&&) = default;
